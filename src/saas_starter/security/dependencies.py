@@ -9,7 +9,7 @@ require_role — фабрика проверок RBAC.
 
 from __future__ import annotations
 
-from collections.abc import Callable
+from collections.abc import Awaitable, Callable
 from typing import Annotated
 
 from fastapi import Depends, HTTPException, Request, status
@@ -104,7 +104,7 @@ async def get_current_user(
     return user
 
 
-def require_role(required: RoleName) -> Callable[..., User]:
+def require_role(required: RoleName) -> Callable[..., Awaitable[User]]:
     """Фабрика зависимости: пускает только пользователей с нужной ролью.
 
     Сейчас плоская модель: admin > user. Если в будущем появятся роли с
